@@ -1,0 +1,20 @@
+{
+  "name": "Telegram-chinese-msg-search",
+  "version": "1.0.0",
+  "description": "Unofficial Telegram message search for Chinese language",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "telegram",
+    "message",
+    "search",
+    "chinese"
+  ],
+  "author": "davidhcefx",
+  "license": "MIT",
+  "dependencies": {
+    "telegram": "^2.26.22"
+  }
+}
