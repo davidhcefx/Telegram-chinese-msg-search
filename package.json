@@ -15,6 +15,7 @@
   "author": "davidhcefx",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.21.2",
     "telegram": "^2.26.22"
   }
 }
