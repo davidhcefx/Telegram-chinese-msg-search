@@ -15,21 +15,16 @@
     }
   </style>
   <script>
-    function submitPhone() {
-      let form = document.getElementById('loginForm');
-      console.log(form);
-      // TODO: some validation, strip hyphens
-    }
   </script>
 </head>
 <body>
   <h1>Unofficial Telegram Message Search</h1>
   <h2>Login</h2>
 
-  <form action="/" method="GET" id="loginForm">
+  <form action="/login" method="GET">
     <label>Phone Number:</label>
     <input type="text" name="phone" value="+886">
-    <input type="submit" value="Submit" onclick="submitPhone()">
+    <input type="submit" value="Submit">
   </form>
 </body>
 </html>
