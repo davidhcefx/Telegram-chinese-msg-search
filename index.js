@@ -1,10 +1,7 @@
 const fs = require("fs");
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { TelegramClient } = require("telegram");
-const { StringSession } = require("telegram/sessions");
 
-const { apiId, apiHash } = JSON.parse(fs.readFileSync('my_api_key.json', 'utf8'));
 const app = express();
 app.use(cookieParser());
 
@@ -31,6 +28,7 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   logReq(req);
   // TODO: check query and provide respective login form
+  // TODO: public key encryption
   res.sendFile(
     'login.html',
     { root: `${__dirname}/web` },
@@ -42,35 +40,3 @@ const port = process.env.PORT || 80;
 const server = app.listen(port, () => {
   console.log(`Server listening at port ${server.address().port}...`);
 });
-
-
-
-//const rl = readline.createInterface({
-//  input: process.stdin,
-//  output: process.stdout,
-//});
-
-//(async () => {
-//  console.log('Loading interactive example...');
-//  const client = new TelegramClient(stringSession, apiId, apiHash, {
-//    connectionRetries: 5,
-//  });
-//  await client.start({
-//    phoneNumber: async () =>
-//      new Promise((resolve) =>
-//        rl.question('Please enter your number: ', resolve)
-//      ),
-//    password: async () =>
-//      new Promise((resolve) =>
-//        rl.question('Please enter your password: ', resolve)
-//      ),
-//    phoneCode: async () =>
-//      new Promise((resolve) =>
-//        rl.question('Please enter the code you received: ', resolve)
-//      ),
-//    onError: (err) => console.log(err),
-//  });
-//  console.log('You should now be connected.');
-//  console.log(client.session.save()); // Save this string to avoid logging in again
-//  await client.sendMessage('me', { message: 'Hello!' });
-//})();
