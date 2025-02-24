@@ -1,10 +1,12 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const loginRouter = require('./loginRouter.js');
 const { logRequest } = require('./utils.js');
 
 const app = express();
-app.use(cookieParser());  // populate req.cookie
+app.use(cookieParser());
+app.use(bodyParser.json());
 app.use('/login', loginRouter);
 
 // TODO: TLS channel

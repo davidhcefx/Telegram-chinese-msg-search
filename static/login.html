@@ -15,16 +15,52 @@
     }
   </style>
   <script>
+    function submitPhonePwd() {
+      let data = {
+        phone: document.getElementById("phone").value.trim(),
+        pwd: document.getElementById("pwd").value.trim(),
+      };
+      data.phone = data.phone.replace('-', '');
+      // validation
+      if (data.phone.length <= 4) {
+        alert("The phone number has too few digits!");
+        return;
+      }
+      if (data.pwd <= 1) {
+        alert("The password is too short!")
+        return;
+      }
+
+      fetch("/login", {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then((r) => {
+        console.log(r);
+        return r;
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
   </script>
 </head>
 <body>
   <h1>Unofficial Telegram Message Search</h1>
-  <h2>Login</h2>
+  <hr>
 
-  <form action="/login" method="GET">
-    <label>Phone Number:</label>
-    <input type="text" name="phone" value="+886">
-    <input type="submit" value="Submit">
+  <form id="phonePwdForm" onsubmit="event.preventDefault(); submitPhonePwd();">
+    <p>
+      <label for="phone">Phone Number:</label>
+      <input type="text" name="phone" id="phone" placeholder="+886xxxx">
+    </p>
+    <p>
+      <label for="pwd">Password:</label>
+      <input type="password" name="pwd" id="pwd">
+    </p>
+    <input type="submit" value="Login">
   </form>
 </body>
 </html>

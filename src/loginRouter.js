@@ -5,15 +5,17 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   logRequest(req);
-  // if (req.query.phone) {
-  // }
-
-  // TODO: check query and provide respective login form
   res.sendFile(
     'login.html',
     { root: `${__dirname}/../static` },
     (err) => { if (err) reply404(req, res) },
   );
 });
+
+router.post('/', (req, res, next) => {
+  logRequest(req);
+  // TODO: do the auth and provide another form
+  res.end('end');
+})
 
 module.exports = router;

@@ -34,8 +34,10 @@ Telegram **still refuse** to support Chinese substring search...
 
 - [GramJS][]: will be used to interact with the official Telegram API
 - [cookie-parser][]: will be used to parse the cookie string
+- [body-parser][]: will be used to parse the POST body
 - [Express][]: wil be used to host the backend
 
 [GramJS]: https://www.npmjs.com/package/telegram
 [cookie-parser]: https://www.npmjs.com/package/cookie-parser
+[body-parser]: https://www.npmjs.com/package/body-parser
 [Express]: https://expressjs.com/

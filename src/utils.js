@@ -4,5 +4,12 @@ module.exports.reply404 = (req, res) => {
 
 module.exports.logRequest = (req) => {
   const pad = (s, size) => s.padEnd(size, ' ');
-  console.log(Date.now(), '-', pad(req.originalUrl, 24), JSON.stringify(req.query));
+  console.log(
+    Date.now(),
+    '-',
+    pad(req.method, 4),
+    pad(req.originalUrl, 24),
+    JSON.stringify(req.query),
+    JSON.stringify(req.body),
+  );
 };
