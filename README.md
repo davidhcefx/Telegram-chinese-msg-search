@@ -4,26 +4,38 @@ Telegram **still refuse** to support Chinese substring search...
 
 ## Login Process
 
-1. On first login, the phone number and password will be prompted and sent to the server.
-2. Then, the user will receive authentication code from TG.
-3. The authentication code will be prompted and sent to the server.
-4. The TG session string will be stored as cookie to skip the next login process.
+1. On first login, user will be asked for phone number and password.
+2. User will be asked for the received authentication code (Telegram APP or SMS)
+3. After login success, backend will store the session key in cookie.
+4. When session is inactive for over 1 hour, user will be automatically logged out.
 
-## Encryption
+## Encryption and Security
 
-- Public key encryption is used to protect sensitive data.
-    - Phone number
+- TLS channel is used to protect end-to-end conversation.
+- In addition, public key encryption is used to protect sensitive data:
     - Password
-- Input from the user is encrypted by the public key, which is provided on first login.
-- Output from the server is encrypted by the public key.
-- The TG session string
-
-TODO: need to logout?
-
-
+    - Phone number
+- On login, a public key pair is generated and sent to the browser. Thus, only backend can access the data.
+- Sensitive data is never logged nor stored.
 
 ## Third Party Packages
 
-- Telegram: will be used to interact with the official Telegram API
-- Cookie-parser: will be used to parse the cookie string
-- Express: will be used to host the website
+```
+                                +----------+
+                                | telegram |
+                                |   API    |
+                                +----^-----+
+ +---------+                         |
+ |         |     +---------+     +--------+
+ | browser |---->|  node   |---->| gramJS |
+ |         |     | backend |     | module |
+ +---------+     +---------+     +--------+
+```
+
+- [GramJS][]: will be used to interact with the official Telegram API
+- [cookie-parser][]: will be used to parse the cookie string
+- [Express][]: wil be used to host the backend
+
+[GramJS]: https://www.npmjs.com/package/telegram
+[cookie-parser]: https://www.npmjs.com/package/cookie-parser
+[Express]: https://expressjs.com/

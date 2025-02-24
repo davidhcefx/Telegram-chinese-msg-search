@@ -10,7 +10,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-(async () => {
+const poc = async () => {
   console.log('Loading interactive example...');
   const sess = await new Promise((resolve) =>
     rl.question('Please provide session string if any: ', resolve)
@@ -62,14 +62,20 @@ const rl = readline.createInterface({
 //    }
 //  }
 
-  const dialog = await dialogs.getDialogs(client, {
-    limit: undefined,
-    archived: false,
-  });
-  console.log(dialog.total);
-  console.log(dialog[0]);
-  for (const d of dialog) {
-    console.log(`${d.title} (${d.entity.username})`);
-  }
+//  const dialog = await dialogs.getDialogs(client, {
+//    limit: undefined,
+//    archived: false,
+//  });
+//  console.log(dialog.total);
+//  console.log(dialog[0]);
+//  for (const d of dialog) {
+//    console.log(`${d.title} (${d.entity.username})`);
+//  }
 
-})();
+//  const rlt = await client.invoke(new Api.auth.LogOut({}));
+//  console.log(rlt);
+};
+
+poc().finally(() => {
+  process.exit()
+});

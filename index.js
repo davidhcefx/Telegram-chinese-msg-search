@@ -14,6 +14,9 @@ function logReq(req) {
   console.log(Date.now(), '-', pad(req.originalUrl, 24), JSON.stringify(req.query));
 }
 
+// TODO: TLS channel
+// TODO: public key encryption
+// TODO: auto logout when inactive
 app.get('/', (req, res) => {
   logReq(req);
   if (req.cookies.sess_id) {
@@ -28,7 +31,6 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   logReq(req);
   // TODO: check query and provide respective login form
-  // TODO: public key encryption
   res.sendFile(
     'login.html',
     { root: `${__dirname}/web` },
