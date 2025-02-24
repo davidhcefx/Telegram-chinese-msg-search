@@ -23,6 +23,12 @@ app.get('/', (req, res) => {
   res.redirect('/login');
 });
 
+// final error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status).end();
+});
+
 const port = process.env.PORT || 80;
 const server = app.listen(port, () => {
   console.log(`Server listening at port ${server.address().port}...`);
