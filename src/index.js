@@ -23,6 +23,15 @@ app.get('/', (req, res) => {
   res.redirect('/login');
 });
 
+app.get('/jsencrypt@3.3.2/*', (req, res) => {
+  logRequest(req);
+  res.sendFile(
+    req.path,
+    { root: `${__dirname}/../static/` },
+    (err) => { if (err) reply404(req, res) },
+  );
+});
+
 // final error handler
 app.use((err, req, res, next) => {
   console.error(err);
