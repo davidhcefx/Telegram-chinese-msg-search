@@ -15,7 +15,6 @@ app.use('/login', loginRouter);
 app.get('/', (req, res) => {
   logRequest(req);
   if (req.cookies.sess_id) {
-    // TODO: loads telegram session from string or file
     // TODO: fill this later with the value from session.save()
     // const stringSession = new StringSession("");
     return;

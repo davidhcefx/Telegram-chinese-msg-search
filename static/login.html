@@ -17,24 +17,34 @@
   </style>
   <script>
     function submitPhonePwd() {
-      let data = {
-        phone: document.getElementById("phone").value.trim(),
-        pwd: document.getElementById("pwd").value.trim(),
-      };
-      data.phone = data.phone.replace('-', '');
+      let phone = document.getElementById("phone").value.trim();
+      let pass = document.getElementById("pwd").value.trim();
+      phone = phone.replace('-', '');
       // validation
-      if (data.phone.length <= 4) {
+      if (phone.length <= 4) {
         alert("The phone number has too few digits!");
         return;
       }
-      if (data.pwd <= 1) {
+      if (pass <= 1) {
         alert("The password is too short!")
         return;
       }
-      // TODO: encryption, after done, clear the field
+      // encryption
+      if (!document.cookie.startsWith('pubkey=')) {
+        location.reload();
+      }
       const encrypt = new JSEncrypt();
-      //encrypt.setPublicKey($('#pubkey').val());
-      //const cipher = encrypt.encrypt($('#input').val());
+      const pubKey = decodeURIComponent(document.cookie.split('pubkey=')[1]);
+      encrypt.setPublicKey(pubKey);
+      phone = encrypt.encrypt(phone);
+      pass = encrypt.encrypt(pass);
+      // hide the fields
+      document.getElementById("phone").value = phone;
+      document.getElementById("pwd").value = pass;
+      document.getElementById("phone").type = 'hidden';
+      document.getElementById("pwd").type = 'hidden';
+      document.getElementById("label-phone").hidden = true;
+      document.getElementById("label-pwd").hidden = true;
 
       fetch("/login", {
         headers: {
@@ -42,9 +52,36 @@
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({phone: phone, pass: pass}),
       }).then((r) => {
-        console.log(r);
+        // show passcode input
+        document.getElementById("pcode").type = 'text';
+        document.getElementById("label-pcode").hidden = false;
+        // change submit handler
+        document.getElementById("loginform").onsubmit = () => {
+          event.preventDefault();
+          submitCode();
+        }
+        return r;
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
+
+    function submitCode() {
+      const phone = document.getElementById("phone").value.trim();
+      const pass = document.getElementById("pwd").value.trim();
+      const pcode = document.getElementById("pcode").value.trim();
+
+      fetch("/login", {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({phone: phone, pass: pass, pcode: pcode}),
+      }).then((r) => {
+        // TODO: after login success, replace page
         return r;
       }).catch((err) => {
         console.error(err);
@@ -56,14 +93,18 @@
   <h1>Unofficial Telegram Message Search</h1>
   <hr>
 
-  <form id="phonePwdForm" onsubmit="event.preventDefault(); submitPhonePwd();">
+  <form id="loginform" onsubmit="event.preventDefault(); submitPhonePwd();">
     <p>
-      <label for="phone">Phone Number:</label>
+      <label for="phone" id="label-phone">Phone Number:</label>
       <input type="text" name="phone" id="phone" placeholder="+886xxxx">
     </p>
     <p>
-      <label for="pwd">Password:</label>
+      <label for="pwd" id="label-pwd">Password:</label>
       <input type="password" name="pwd" id="pwd">
+    </p>
+    <p>
+      <label for="pcode" id="label-pcode" hidden>Enter the passcode you received (Telegram/SMS):</label>
+      <input type="hidden" name="pcode" id="pcode">
     </p>
     <input type="submit" value="Login">
   </form>
