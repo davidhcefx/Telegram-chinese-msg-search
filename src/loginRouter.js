@@ -22,6 +22,7 @@ function loginForPhonePasswd(req, res, next) {
 function loginForPasscode(req, res, next) {
   logRequest(req);
   if (req.body.phone == undefined || req.body.pass == undefined) {
+    // TODO: or reply json?
     next();
   }
   if (req.body.pcode == undefined) {
