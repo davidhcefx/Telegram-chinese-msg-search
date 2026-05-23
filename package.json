@@ -15,9 +15,9 @@
   "author": "davidhcefx",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.20.4",
+    "body-parser": "^1.20.5",
     "cookie-parser": "^1.4.7",
-    "express": "^4.22.1",
+    "express": "^4.22.2",
     "telegram": "^2.26.22"
   }
 }
